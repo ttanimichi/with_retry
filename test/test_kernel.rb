@@ -26,4 +26,14 @@ class TestKernel < Minitest::Test
       with_retry(failed: NotImplementedError) { fail }
     end
   end
+
+  class ArgumentRequiredError < StandardError
+    def initialize(dummy); end
+  end
+
+  def test_with_retry_by_argument_required_error
+    assert_raises(ArgumentRequiredError) do
+      with_retry(on: ArgumentRequiredError) { raise ArgumentRequiredError.new('dummy') }
+    end
+  end
 end
